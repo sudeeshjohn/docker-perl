@@ -9,9 +9,7 @@ COPY *.patch /usr/src/perl/
 WORKDIR /usr/src/perl
 
 RUN curl -SL https://cpan.metacpan.org/authors/id/S/SH/SHAY/perl-5.22.1.tar.bz2 -o perl-5.22.1.tar.bz2 \
-#RUN curl -SL http://9.40.194.137/perl-5.22.1.tar.bz2 -o perl-5.22.1.tar.bz2 
    && echo '29f9b320b0299577a3e1d02e9e8ef8f26f160332 *perl-5.22.1.tar.bz2' | sha1sum -c - \
-#RUN echo '735ed1f24327ac910708a1dd6d798b60d0841593 *perl-5.22.1.tar.bz2' | sha1sum -c - \
     && tar --strip-components=1 -xjf perl-5.22.1.tar.bz2 -C /usr/src/perl \
     && rm perl-5.22.1.tar.bz2 \
     && cat *.patch | patch -p1 \
@@ -25,6 +23,6 @@ RUN curl -SL https://cpan.metacpan.org/authors/id/S/SH/SHAY/perl-5.22.1.tar.bz2 
     && ./cpanm App::cpanminus \
     && rm -fr ./cpanm /root/.cpanm /usr/src/perl /tmp/*
 
-WORKDIR /root
 USER 0
+WORKDIR /root
 CMD ["perl5.22.1","-de0"]
