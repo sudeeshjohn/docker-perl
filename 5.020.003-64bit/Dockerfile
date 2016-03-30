@@ -1,4 +1,4 @@
-FROM buildpack-deps
+FROM ppc64le/buildpack-deps
 MAINTAINER Peter Martini <PeterCMartini@GMail.com>
 
 RUN apt-get update \
@@ -16,7 +16,7 @@ RUN curl -SL https://cpan.metacpan.org/authors/id/S/SH/SHAY/perl-5.20.3.tar.bz2 
     && cat *.patch | patch -p1 \
     && ./Configure -Duse64bitall  -des \
     && make -j$(nproc) \
-    && TEST_JOBS=$(nproc) make test_harness \
+#    && TEST_JOBS=$(nproc) make test_harness \
     && make install \
     && cd /usr/src \
     && curl -LO https://raw.githubusercontent.com/miyagawa/cpanminus/master/cpanm \
@@ -25,5 +25,5 @@ RUN curl -SL https://cpan.metacpan.org/authors/id/S/SH/SHAY/perl-5.20.3.tar.bz2 
     && rm -fr ./cpanm /root/.cpanm /usr/src/perl /tmp/*
 
 WORKDIR /root
-
+USER 1001
 CMD ["perl5.20.3","-de0"]
